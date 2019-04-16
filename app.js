@@ -17,7 +17,7 @@ app.get('/api/courses', (req, res) => {
 app.get('/api/courses/:id', (req, res) => {
     const course = courses.find(c => c.id === parseInt(req.params.id));
     
-    if (!course) res.status(404).send('The course you are looking for is not found.');
+    if (!course) return res.status(404).send('The course you are looking for is not found.');
 
     res.send(course);
 });
@@ -29,7 +29,7 @@ app.post('/api/courses', (req, res) => {
     const result = Joi.validate(req.body, schema);
     // console.log(result);
     if (result.error)
-        res.status(400).send(result.error.details[0].message);
+        return res.status(400).send(result.error.details[0].message);
     
     const course = {
         id: courses.length + 1,
